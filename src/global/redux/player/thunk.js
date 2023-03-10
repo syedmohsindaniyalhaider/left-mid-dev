@@ -217,20 +217,23 @@ const getPlayerSkillStat = createAsyncThunk(
 
 const updatePlayerSkills = createAsyncThunk(
 	'update-player-skills',
-	async (data, assessmentId, playerAssessmentId) => {
+	async (data) => {
 		try {
 			const rating = {
-				[data.skill_1]: data.score_1,
-				[data.skill_2]: data.score_2,
-				[data.skill_3]: data.score_3,
-				[data.skill_4]: data.score_4,
-				[data.skill_5]: data.score_5,
-				[data.skill_6]: data.score_6,
-				[data.skill_7]: data.score_7,
+				[data.skill.skill_1]: data.skill.score_1,
+				[data.skill.skill_2]: data.skill.score_2,
+				[data.skill.skill_3]: data.skill.score_3,
+				[data.skill.skill_4]: data.skill.score_4,
+				[data.skill.skill_5]: data.skill.score_5,
+				[data.skill.skill_6]: data.skill.score_6,
+				[data.skill.skill_7]: data.skill.score_7,
 			};
 
-			// console.log('Here is rating', rating, assessmentId, playerAssessmentId);
-			await updatePlayerSkillsRating(rating, assessmentId, playerAssessmentId);
+			await updatePlayerSkillsRating(
+				rating,
+				data?.assessmentId,
+				data?.playerAssessmentId
+			);
 		} catch (err) {
 			showNoti('error', err.message);
 		}
