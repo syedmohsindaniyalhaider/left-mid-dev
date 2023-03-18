@@ -1,4 +1,3 @@
-/* eslint-disable */
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
 import {
@@ -228,12 +227,14 @@ const updatePlayerSkills = createAsyncThunk(
 				[data.skill.skill_6]: data.skill.score_6,
 				[data.skill.skill_7]: data.skill.score_7,
 			};
-
 			await updatePlayerSkillsRating(
 				rating,
 				data?.assessmentId,
 				data?.playerAssessmentId
 			);
+			return {
+				data: rating,
+			};
 		} catch (err) {
 			showNoti('error', err.message);
 		}
