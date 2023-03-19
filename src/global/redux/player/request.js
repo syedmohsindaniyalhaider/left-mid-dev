@@ -76,6 +76,7 @@ const getPlayerAssessmentInfo = async (assessmentId, playerAssessmentId) => {
 		`assessment/${assessmentId}/player_assessment/${playerAssessmentId}`
 	);
 	const data = await getDoc(ref);
+	console.log('Get player reflection', data.data());
 	return data.data();
 };
 

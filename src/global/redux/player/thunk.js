@@ -232,9 +232,6 @@ const updatePlayerSkills = createAsyncThunk(
 				data?.assessmentId,
 				data?.playerAssessmentId
 			);
-			return {
-				data: rating,
-			};
 		} catch (err) {
 			showNoti('error', err.message);
 		}

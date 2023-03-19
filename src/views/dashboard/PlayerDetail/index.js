@@ -64,15 +64,21 @@ const PlayerDetail = () => {
 	const navigate = useNavigate();
 	const dispatch = useDispatch();
 	const { playerId, assessmentId } = useParams();
-	const { isLoading, selfImprove, selfImproveLoading, reflection, psychology } =
-		useSelector(({ player }) => ({
-			isLoading: player.isLoading,
-			selfImprove: player.selfImprove,
-			selfImproveLoading: player.selfImproveLoading,
-			reflection: player.reflection,
-			psychology: player.psychology,
-		}));
-	const { playerSkillRating } = useSelector((state) => state.player);
+	const {
+		isLoading,
+		selfImprove,
+		selfImproveLoading,
+		reflection,
+		psychology,
+		playerSkillRating,
+	} = useSelector(({ player }) => ({
+		isLoading: player.isLoading,
+		selfImprove: player.selfImprove,
+		selfImproveLoading: player.selfImproveLoading,
+		reflection: player.reflection,
+		psychology: player.psychology,
+		playerSkillRating: player.playerSkillRating,
+	}));
 	const { playerInAssessment } = useSelector(({ assessment }) => assessment);
 	const data = playerInAssessment.filter(
 		(item) => item?.userID === playerId
@@ -107,14 +113,12 @@ const PlayerDetail = () => {
 			})
 		);
 
-		setTimeout(() => {
-			dispatch(
-				getPlayerReflection({
-					assessmentId,
-					playerAssessmentId: data.id,
-				})
-			);
-		}, 4000);
+		dispatch(
+			getPlayerReflection({
+				assessmentId,
+				playerAssessmentId: data.id,
+			})
+		);
 	};
 
 	useEffect(() => {
@@ -151,6 +155,8 @@ const PlayerDetail = () => {
 			score_7: playerSkillRating['Proactive Defending'],
 		});
 	}, [playerSkillRating]);
+
+	console.log('skill', skill);
 
 	return (
 		<>

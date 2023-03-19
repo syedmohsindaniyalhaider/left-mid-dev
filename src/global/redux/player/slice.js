@@ -9,7 +9,6 @@ import {
 	getPlayerSkillStat,
 	getPlayerSelfImprove,
 	getPlayerReflection,
-	updatePlayerSkills,
 } from './thunk';
 
 const initialState = {
@@ -37,7 +36,15 @@ const initialState = {
 	isEditing: false,
 	selfImproveLoading: false,
 	isLoadingSkill: false,
-	playerSkillRating: {},
+	playerSkillRating: {
+		'Striking the Ball': 0,
+		'Receiving (Awareness)': 0,
+		'Keep the ball (Evasion)': 0,
+		'1v1 Defending': 0,
+		'1v1 Attacking': 0,
+		'Running with the Ball': 0,
+		'Proactive Defending': 0,
+	},
 	skillLoading: false,
 };
 
@@ -86,12 +93,22 @@ const playerSlice = createSlice({
 		});
 
 		builders.addCase(getPlayerReflection.fulfilled, (state, action) => {
+			state.playerSkillRating = {
+				'Striking the Ball': 0,
+				'Receiving (Awareness)': 0,
+				'Keep the ball (Evasion)': 0,
+				'1v1 Defending': 0,
+				'1v1 Attacking': 0,
+				'Running with the Ball': 0,
+				'Proactive Defending': 0,
+			};
 			state.reflection = action.payload?.data?.reflection;
 			state.psychology.attitude = action.payload.data?.attitude;
 			state.psychology.coachability = action.payload.data?.coachability;
 			state.psychology.intensity = action.payload.data?.intensity;
 			state.psychology.concentration = action.payload.data?.concentration;
-			state.playerSkillRating = action.payload.data?.rating;
+			if (!!action.payload.data?.rating)
+				state.playerSkillRating = action.payload.data?.rating;
 		});
 
 		builders.addCase(getPlayerAssessment.pending, (state) => {
@@ -144,16 +161,6 @@ const playerSlice = createSlice({
 		});
 		builders.addCase(getPlayerSelfImprove.rejected, (state) => {
 			state.selfImproveLoading = false;
-		});
-		builders.addCase(updatePlayerSkills.pending, (state) => {
-			state.skillLoading = true;
-		});
-		builders.addCase(updatePlayerSkills.fulfilled, (state, action) => {
-			state.skillLoading = false;
-			state.playerSkillRating = action.payload?.data;
-		});
-		builders.addCase(updatePlayerSkills.rejected, (state) => {
-			state.skillLoading = false;
 		});
 	},
 });

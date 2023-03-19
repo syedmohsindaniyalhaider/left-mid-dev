@@ -63,21 +63,13 @@ const RadarChart = ({ playerSkillRating }) => {
 	};
 
 	return (
-		<>
-			{isLoadingSkill ? (
-				<Loading />
-			) : skill?.length != 0 ? (
-				<Box
-					sx={{
-						width: '40%',
-					}}
-				>
-					<Radar data={data} options={options} />
-				</Box>
-			) : (
-				<></>
-			)}
-		</>
+		<Box
+			sx={{
+				width: '40%',
+			}}
+		>
+			<Radar data={data} options={options} />
+		</Box>
 	);
 };
 
